@@ -63,11 +63,11 @@ const Header = ({ darkMode, handleThemeChange }: Props) => {
                 </Box>
 
                 <List sx={{ display: "flex" }}>
-                    {midLinks.map(({ title, path }) => (
+                    {midLinks.map(({ title, path }, index) => (
                         <ListItem
                             component={NavLink}
                             to={path}
-                            key={path}
+                            key={index}
                             sx={navStyles}
                         >
                             {title.toUpperCase()}
@@ -88,11 +88,11 @@ const Header = ({ darkMode, handleThemeChange }: Props) => {
                     </IconButton>
 
                     <List sx={{ display: "flex" }}>
-                        {rightLinks.map(({ title, path }) => (
+                        {rightLinks.map(({ title, path }, index) => (
                             <ListItem
                                 component={NavLink}
                                 to={path}
-                                key={path}
+                                key={index}
                                 sx={navStyles}
                             >
                                 {title.toUpperCase()}
