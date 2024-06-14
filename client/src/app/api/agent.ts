@@ -51,8 +51,8 @@ const requests = {
 };
 
 const Catalog = {
-    list: () => requests.get("/products"),
-    details: (id: number) => requests.get(`/products/${id}`),
+    list: () => requests.get("products"),
+    details: (id: number) => requests.get(`products/${id}`),
 };
 
 const TestErrors = {
@@ -66,12 +66,9 @@ const TestErrors = {
 const Basket = {
     get: () => requests.get("/basket"),
     addItem: (productId: number, quantity = 1) =>
-        requests.post(
-            `/basket?productId=${productId}&quantity=${quantity}`,
-            {}
-        ),
+        requests.post(`basket?productId=${productId}&quantity=${quantity}`, {}),
     removeItem: (productId: number, quantity = 1) =>
-        requests.del(`/basket?productId=${productId}&quantity=${quantity}`),
+        requests.del(`basket?productId=${productId}&quantity=${quantity}`),
 };
 
 const agent = {
