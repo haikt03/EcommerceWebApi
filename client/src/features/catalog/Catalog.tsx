@@ -58,9 +58,11 @@ const Catalog = () => {
                     <RadioButtonGroup
                         selectedValue={productParams.orderBy}
                         options={sortOptions}
-                        onChange={(e) =>
+                        onChange={(event) =>
                             dispatch(
-                                setProductParams({ orderBy: e.target.value })
+                                setProductParams({
+                                    orderBy: event.target.value,
+                                })
                             )
                         }
                     />
