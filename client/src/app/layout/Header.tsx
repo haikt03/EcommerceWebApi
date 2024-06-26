@@ -51,7 +51,7 @@ const Header = ({ darkMode, handleThemeChange }: Props) => {
     );
 
     return (
-        <AppBar position="sticky" sx={{ mb: 4 }}>
+        <AppBar position="sticky">
             <Toolbar
                 sx={{
                     display: "flex",

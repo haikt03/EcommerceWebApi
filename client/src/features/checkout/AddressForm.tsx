@@ -2,9 +2,26 @@ import { Typography, Grid } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import AppTextInput from "../../app/components/AppTextInput";
 import AppCheckbox from "../../app/components/AppCheckbox";
+import { useEffect } from "react";
+import agent from "../../app/api/agent";
 
 const AddressForm = () => {
-    const { control, formState } = useFormContext();
+    const { control, formState, setValue } = useFormContext();
+
+    useEffect(() => {
+        agent.Account.fetchAddress().then((response) => {
+            if (response) {
+                setValue("fullName", response.fullName);
+                setValue("address1", response.address1);
+                setValue("address2", response.address2);
+                setValue("city", response.city);
+                setValue("state", response.state);
+                setValue("zip", response.zip);
+                setValue("country", response.country);
+                setValue("saveAddress", false);
+            }
+        });
+    }, [setValue]);
 
     return (
         <>
@@ -47,7 +64,7 @@ const AddressForm = () => {
                     <AppTextInput
                         control={control}
                         name="zip"
-                        label="Zipcode"
+                        label="Zip code"
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>

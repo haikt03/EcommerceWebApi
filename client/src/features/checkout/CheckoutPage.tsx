@@ -7,7 +7,7 @@ import {
     Stepper,
     Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
@@ -85,18 +85,6 @@ const CheckoutPage = () => {
         resolver: yupResolver(currentValidationSchema),
     });
 
-    useEffect(() => {
-        agent.Account.fetchAddress().then((response) => {
-            if (response) {
-                methods.reset({
-                    ...methods.getValues(),
-                    ...response,
-                    saveAddress: false,
-                });
-            }
-        });
-    }, [methods]);
-
     async function submitOrder(data: FieldValues) {
         setLoading(true);
         const { nameOnCard, saveAddress, ...shippingAddress } = data;
@@ -116,7 +104,6 @@ const CheckoutPage = () => {
                     },
                 }
             );
-            console.log(paymentResult);
             if (paymentResult.paymentIntent?.status === "succeeded") {
                 const orderNumber = await agent.Orders.create({
                     saveAddress,

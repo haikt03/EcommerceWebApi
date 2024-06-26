@@ -71,6 +71,7 @@ const Register = () => {
             >
                 <TextField
                     margin="normal"
+                    required
                     fullWidth
                     label="Username"
                     autoFocus

@@ -2,15 +2,17 @@ import { createTheme } from "@mui/material/styles";
 import { CssBaseline, Container, ThemeProvider } from "@mui/material";
 import Header from "./Header";
 import { useCallback, useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LoadingComponent from "./LoadingComponent";
 import { useAppDispatch } from "../store/configureStore";
 import { fetchBasketAsync } from "../../features/basket/basketSlice";
 import { fetchCurrentUserAsync } from "../../features/account/accountSlice";
+import HomePage from "../../features/home/HomePage";
 
 function App() {
+    const location = useLocation();
     const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(true);
     const [darkMode, setDarkMode] = useState(false);
@@ -42,8 +44,6 @@ function App() {
         setDarkMode(!darkMode);
     };
 
-    if (loading) return <LoadingComponent message="Initializing app..." />;
-
     return (
         <ThemeProvider theme={theme}>
             <ToastContainer
@@ -53,9 +53,15 @@ function App() {
             />
             <CssBaseline />
             <Header darkMode={darkMode} handleThemeChange={handleThemeChange} />
-            <Container>
-                <Outlet />
-            </Container>
+            {loading ? (
+                <LoadingComponent message="Initializing app..." />
+            ) : location.pathname === "/" ? (
+                <HomePage />
+            ) : (
+                <Container sx={{ mt: 4 }}>
+                    <Outlet />
+                </Container>
+            )}
         </ThemeProvider>
     );
 }
