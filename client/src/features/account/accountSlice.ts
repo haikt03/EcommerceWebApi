@@ -68,7 +68,15 @@ export const accountSlice = createSlice({
             router.navigate("/");
         },
         setUser: (state, action) => {
-            state.user = action.payload;
+            const claims = JSON.parse(atob(action.payload.token.split(".")[1]));
+            const roles =
+                claims[
+                    "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                ];
+            state.user = {
+                ...action.payload,
+                roles: typeof roles === "string" ? [roles] : roles,
+            };
         },
     },
     extraReducers: (builder) => {
@@ -81,7 +89,17 @@ export const accountSlice = createSlice({
         builder.addMatcher(
             isAnyOf(signInAsync.fulfilled, fetchCurrentUserAsync.fulfilled),
             (state, action) => {
-                state.user = action.payload;
+                const claims = JSON.parse(
+                    atob(action.payload.token.split(".")[1])
+                );
+                const roles =
+                    claims[
+                        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                    ];
+                state.user = {
+                    ...action.payload,
+                    roles: typeof roles === "string" ? [roles] : roles,
+                };
             }
         );
         builder.addMatcher(isAnyOf(signInAsync.rejected), (_state, action) => {
